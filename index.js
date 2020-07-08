@@ -80,6 +80,11 @@ BarChart.prototype.update = function(data) {
     this.yAxisGroup.call(this.yAxis);
 };
 
+const svg = d3.select('.canvas')
+    .append('svg')
+    .attr('width', 600)
+    .attr('height', 600);
+
 const getCollectionData = async (collection) => {
     const response = await db.collection(collection).get();
     return response.docs.map( doc => doc.data());
@@ -107,4 +112,5 @@ const getCollectionData = async (collection) => {
         });
         barChart.update(data);
     });
+
 })();
