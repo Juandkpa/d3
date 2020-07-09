@@ -19,10 +19,24 @@ const arcPath = d3.arc()
 const color = d3.scaleOrdinal(d3['schemeSet3']);
 const legendGroup = svg.append('g')
     .attr('transform', `translate(${dims.width + 40}, 10)`);
+
 const legend = d3.legendColor()
     .shape('circle')
     .shapePadding('10')
-    .scale(color)
+    .scale(color);
+
+const tip = d3.tip()
+    .attr('class', 'tip card')
+    .html(d => {
+        const { name, cost } = d.data;
+        return `
+            <div class="name">${name}</div>
+            <div class="cost">${cost}</div>
+            <div class="delete">click slice to delete</div>
+        `;
+    });
+
+graph.call(tip);
 
 const update = (data) => {
     color.domain(data.map(d => d.name));
@@ -56,6 +70,17 @@ const update = (data) => {
         .each( function(d){ this._current = d} )
         .transition().duration(750)
             .attrTween("d", arcTweenEnter);
+
+    graph.selectAll('path')
+        .on('mouseover', (d,i,n) => {
+            tip.show(d, n[i]);
+            handleMouseOver(d,i,n);
+        })
+        .on('mouseout', (d,i,n) => {
+            tip.hide();
+            handleMouseOut(d,i,n);
+        })
+        .on('click', handleClick);
 }
 
 var data = [];
@@ -102,3 +127,20 @@ function arcTweenUpdate(d) {
 
     return t => arcPath(i(t));
 }
+
+const handleMouseOver = (d, i, n) => {
+    d3.select(n[i])
+        .transition('changeSliceFill').duration(300)
+            .attr('fill', '#fff');
+};
+
+const handleMouseOut = (d, i, n) => {
+    d3.select(n[i])
+        .transition('changeSliceFill').duration(300)
+            .attr('fill', color(d.data.name));
+};
+
+const handleClick = d => {
+    const { id } = d.data;
+    db.collection('expenses').doc(id).delete();
+};
