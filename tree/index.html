@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tree</title>
+</head>
+<body>
+    <div class="pink section">
+        <h2 class="white-text center">Ninja Corp</h2>
+    </div>
+    <div class="grey lighten-3 section grey-text" style="position: relative">
+        <p class="flow-text center">The company number one</p>
+        <a href="#modal" class="btn-floating btn-large halfway-fab pink modal-trigger">
+            <i class="material-icons">add</i>
+        </a>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h4 class="pink-text center">Add New Employee</h4>
+            <form>
+                <div class="input-field">
+                    <input type="text" id="name" placeholder="Employee Name">
+                </div>
+                <div class="input-field">
+                    <input type="text" id="parent" placeholder="Reports to...">
+                </div>
+                <div class="input-field">
+                    <input type="text" id="department" placeholder="Department">
+                </div>
+                <div class="input-field">
+                    <button class="btn pink white-text">Add Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container"><div class="canvas"></div></div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDevYYa9fU4N4S1QA04MsU-R8EZKLdcbj4",
+            authDomain: "d3app-d9857.firebaseapp.com",
+            databaseURL: "https://d3app-d9857.firebaseio.com",
+            projectId: "d3app-d9857",
+            storageBucket: "d3app-d9857.appspot.com",
+            messagingSenderId: "391349607367",
+            appId: "1:391349607367:web:62db65cadacc07ee2417e2",
+            measurementId: "G-SXX3PCVKGQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <script type="module" src="index.js"></script>
+    <script type="module" src="graph.js"></script>
+</body>
+</html>
